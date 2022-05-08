@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 
 class AbsenInputController extends GetxController {
-  //TODO: Implement AbsenInputController
 
   final count = 0.obs;
   @override

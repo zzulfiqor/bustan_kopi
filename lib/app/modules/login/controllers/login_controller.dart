@@ -1,11 +1,9 @@
-import 'dart:developer';
 
 import 'package:bustan_kopi/app/data/models/user_model.dart';
 import 'package:bustan_kopi/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class LoginController extends GetxController {
   // Super User

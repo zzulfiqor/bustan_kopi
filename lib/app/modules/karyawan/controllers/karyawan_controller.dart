@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 
 class KaryawanController extends GetxController {
-  //TODO: Implement KaryawanController
 
   final count = 0.obs;
   @override

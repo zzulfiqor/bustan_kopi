@@ -1,4 +1,3 @@
-import 'package:bustan_kopi/app/data/models/kehadiran_model.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -12,9 +11,6 @@ class ChangePinController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
-    // Hive Box
-    var box = Hive.box<String>('pin');
   }
 
   // submit pin
@@ -22,8 +18,7 @@ class ChangePinController extends GetxController {
     // Hive Box
     var box = Hive.box<String>('pin');
     box.clear().then((value) {
-    box.add(pin).then((value) => Get.back());
-
+      box.add(pin).then((value) => Get.back());
     });
   }
 }
