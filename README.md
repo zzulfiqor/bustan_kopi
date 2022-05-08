@@ -1,5 +1,7 @@
 # Bustan Kopi -  Employe Management System App (Mobile App) Using Flutter
 
+OFFLINE DATA - Hive Database
+
 Features :
 - Employee Management
 add , edit , Delete Employee's data from system
