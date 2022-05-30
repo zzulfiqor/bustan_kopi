@@ -1,3 +1,4 @@
+import 'package:bustan_kopi/app/data/models/shift_model.dart';
 import 'package:bustan_kopi/app/data/models/status_kehadiran_enum.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -15,7 +16,7 @@ class Kehadiran {
   StatusKehadiran? statusKehadiran;
 
   @HiveField(3)
-  String? shift;
+  ShiftModel? shift;
 
   Kehadiran({
     this.userId,

@@ -15,6 +15,8 @@ abstract class Routes {
   static const PRESENSI_ADD = _Paths.PRESENSI_ADD;
   static const PIN = _Paths.PIN;
   static const PIN_CHANGE = _Paths.PIN_CHANGE;
+  static const SETTING = _Paths.SETTING;
+  static const SHIFT_EDIT = _Paths.SHIFT_EDIT;
 }
 
 abstract class _Paths {
@@ -29,5 +31,6 @@ abstract class _Paths {
   static const KARYAWAN_ADD = '/karyawan/add';
   static const PIN = '/pin';
   static const PIN_CHANGE = '/pin/change';
-  
+  static const SETTING = '/setting';
+  static const SHIFT_EDIT = '/shift-edit';
 }

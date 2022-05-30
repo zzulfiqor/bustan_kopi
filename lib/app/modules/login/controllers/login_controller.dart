@@ -1,4 +1,4 @@
-
+import 'package:bustan_kopi/app/data/models/shift_model.dart';
 import 'package:bustan_kopi/app/data/models/user_model.dart';
 import 'package:bustan_kopi/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -35,12 +35,31 @@ class LoginController extends GetxController {
     super.onInit();
     var box = Hive.box<UserModel>('activeUser');
     var boxPin = Hive.box<String>('pin');
+    var boxShift = Hive.box<ShiftModel>('shift');
 
     // if boxPin empty
     if (boxPin.values.length == 0) {
       boxPin.add('123456');
     }
 
+    // if boxShift empty
+    if (boxShift.values.length == 0) {
+      boxShift.add(ShiftModel(
+        id: '1',
+        name: 'Shift 1',
+        timeStart: '07:00',
+        timeEnd: '16:00',
+      ));
+
+      boxShift.add(ShiftModel(
+        id: '2',
+        name: 'Shift 2',
+        timeStart: '16:00',
+        timeEnd: '22:00',
+      ));
+    }
+
+    // if boxActiveUser empty
     if (box.values.length > 0) {
       var activeUser = box.toMap().values.toList().first;
       Future.delayed(Duration(milliseconds: 100), () {
@@ -48,9 +67,6 @@ class LoginController extends GetxController {
       });
     }
   }
-
-  @override
-  void onClose() {}
 
   // login process
   void loginProcess() {

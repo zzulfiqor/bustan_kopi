@@ -125,8 +125,13 @@ class AddPresensiView extends GetView<AddPresensiController> {
                                 itemCount: controller.shifts.length,
                                 itemBuilder: (_, index) {
                                   return ListTile(
+                                    leading: Icon(Icons.access_time),
                                     title: Text(
-                                        "Shift Ke - ${controller.shifts[index]}"),
+                                        "Shift Ke - ${controller.shifts[index].id}"),
+                                    subtitle:
+                                        "${controller.shifts[index].timeStart} - ${controller.shifts[index].timeEnd} WIB"
+                                            .text
+                                            .make(),
                                     onTap: () {
                                       controller.selectedShift =
                                           controller.shifts[index];
@@ -151,7 +156,7 @@ class AddPresensiView extends GetView<AddPresensiController> {
                       children: [
                         HStack([
                           Obx(() => Text(
-                              "${controller.selectedShift == 0 ? 'Pilih Shift' : 'Shift Ke - ' + controller.selectedShift.toString()}")),
+                              "${controller.selectedShift.id == null ? 'Pilih Shift' : 'Shift Ke - ' + controller.selectedShift.id.toString() + ' ( ${controller.selectedShift.timeStart} - ${controller.selectedShift.timeEnd} WIB) '}")),
                         ]).paddingOnly(left: 16),
                         Icon(Icons.arrow_drop_down),
                       ],

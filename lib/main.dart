@@ -1,4 +1,5 @@
 import 'package:bustan_kopi/app/data/models/kehadiran_model.dart';
+import 'package:bustan_kopi/app/data/models/shift_model.dart';
 import 'package:bustan_kopi/app/data/models/status_kehadiran_enum.dart';
 import 'package:bustan_kopi/app/data/models/user_model.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ void main() async {
   Hive.registerAdapter(KehadiranAdapter());
   Hive.registerAdapter(StatusKehadiranAdapter());
   Hive.registerAdapter(UserModelAdapter());
+  Hive.registerAdapter(ShiftModelAdapter());
+
 
   // open hive
   await Hive.openBox<UserModel>('user');
@@ -22,6 +25,7 @@ void main() async {
   await Hive.openBox<int>('nominalGaji');
   await Hive.openBox<UserModel>('activeUser');
   await Hive.openBox<String>('pin');
+  await Hive.openBox<ShiftModel>('shift');
 
   
 

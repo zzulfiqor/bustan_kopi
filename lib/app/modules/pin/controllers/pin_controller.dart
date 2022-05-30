@@ -38,14 +38,33 @@ class PinController extends GetxController {
       indexPresensi = "";
     }
 
+    // if pin is correct and not delete
     if (pin == this.pin && splittedArg.first != 'delete') {
       Get.offNamed(route);
-    } else if (pin == this.pin && splittedArg.first == 'delete') {
+      return;
+    }
+
+    // if pin is correct and delete per index
+    if (pin == this.pin &&
+        splittedArg.first == 'delete' &&
+        splittedArg.last != 'all') {
       var box = Hive.box<Kehadiran>('kehadiran');
       box.deleteAt(int.parse(indexPresensi));
       Get.back();
-    } else {
-      Get.snackbar('Pin Salah', 'Silahkan coba lagi');
+      return;
     }
+
+    // if pin is correct and delete all
+    if (pin == this.pin &&
+        splittedArg.first == 'delete' &&
+        splittedArg.last == 'all') {
+      var box = Hive.box<Kehadiran>('kehadiran');
+      box.clear();
+      Get.back();
+      return;
+    }
+
+    // if pin false
+    Get.snackbar('Pin Salah', 'Silahkan coba lagi');
   }
 }

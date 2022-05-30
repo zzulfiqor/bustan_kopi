@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bustan_kopi/app/data/models/kehadiran_model.dart';
+import 'package:bustan_kopi/app/data/models/status_kehadiran_enum.dart';
 import 'package:bustan_kopi/app/data/models/user_model.dart';
 import 'package:bustan_kopi/app/routes/app_pages.dart';
 import 'package:bustan_kopi/app/utils/global_function.dart';
@@ -18,6 +19,36 @@ class PresensiView extends GetView<PresensiController> {
       appBar: AppBar(
         title: Text('Presensi Karyawan'),
         centerTitle: true,
+        actions: [
+          // delete all
+          IconButton(
+            icon: Icon(Icons.delete_outline),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                        title: Text('Hapus Semua Data'),
+                        content: Text(
+                            'Apakah anda yakin akan menghapus semua data?'),
+                        actions: [
+                          ElevatedButton(
+                            child: Text('Tidak'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ElevatedButton(
+                              child: Text('Ya'),
+                              onPressed: () {
+                                Get.back();
+                                Get.toNamed(Routes.PIN, arguments:'delete/all');
+                              }),
+                        ]);
+                  });
+            },
+          ),
+        ],
       ),
       body: ValueListenableBuilder(
           valueListenable: Hive.box<Kehadiran>('kehadiran').listenable(),
@@ -75,18 +106,33 @@ class PresensiView extends GetView<PresensiController> {
                                     backgroundColor: Colors.grey,
                                   ),
                                   title: Text(
-                                      '${userData[0].name} (Shift ${data[index].shift})'),
-                                  subtitle: Text(formatDateToIndonesiaLengkap(
+                                      '${userData[0].name} (${data[index].shift?.name.toString()})'),
+                                  subtitle: Text(
+                                    formatDateToIndonesiaLengkap(
                                       DateTime.parse(
-                                          data[index].waktuKehadiran ?? ''))),
+                                          data[index].waktuKehadiran ?? ''),
+                                    ),
+                                  ),
                                   trailing: Container(
                                     padding: EdgeInsets.all(4),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors.green,
+                                      color: data[index].statusKehadiran ==
+                                              StatusKehadiran.TerlaluPagi
+                                          ? Colors.amber
+                                          : data[index].statusKehadiran ==
+                                                  StatusKehadiran.Terlambat
+                                              ? Colors.red
+                                              : Colors.green,
                                     ),
                                     child: Icon(
-                                      Icons.check,
+                                      data[index].statusKehadiran ==
+                                              StatusKehadiran.TerlaluPagi
+                                          ? Icons.warning
+                                          : data[index].statusKehadiran ==
+                                                  StatusKehadiran.Terlambat
+                                              ? Icons.close
+                                              : Icons.check,
                                       size: 18,
                                       color: Colors.white,
                                     ),

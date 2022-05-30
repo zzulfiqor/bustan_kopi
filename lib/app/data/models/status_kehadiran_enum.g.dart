@@ -17,6 +17,14 @@ class StatusKehadiranAdapter extends TypeAdapter<StatusKehadiran> {
         return StatusKehadiran.Hadir;
       case 1:
         return StatusKehadiran.TidakHadir;
+      case 2:
+        return StatusKehadiran.Terlambat;
+      case 3:
+        return StatusKehadiran.Ijin;
+      case 4:
+        return StatusKehadiran.Sakit;
+      case 5:
+        return StatusKehadiran.TerlaluPagi;
       default:
         return StatusKehadiran.Hadir;
     }
@@ -30,6 +38,18 @@ class StatusKehadiranAdapter extends TypeAdapter<StatusKehadiran> {
         break;
       case StatusKehadiran.TidakHadir:
         writer.writeByte(1);
+        break;
+      case StatusKehadiran.Terlambat:
+        writer.writeByte(2);
+        break;
+      case StatusKehadiran.Ijin:
+        writer.writeByte(3);
+        break;
+      case StatusKehadiran.Sakit:
+        writer.writeByte(4);
+        break;
+      case StatusKehadiran.TerlaluPagi:
+        writer.writeByte(5);
         break;
     }
   }

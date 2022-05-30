@@ -9,4 +9,17 @@ enum StatusKehadiran {
 
   @HiveField(1)
   TidakHadir,
+
+  @HiveField(2)
+  Terlambat,
+
+  @HiveField(3)
+  Ijin,
+
+  @HiveField(4)
+  Sakit,
+
+  @HiveField(5)
+  TerlaluPagi,
+
 }

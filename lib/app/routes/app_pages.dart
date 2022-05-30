@@ -1,4 +1,3 @@
-import 'package:bustan_kopi/app/modules/pin/views/change_pin_view.dart';
 import 'package:get/get.dart';
 
 import 'package:bustan_kopi/app/modules/absen_input/bindings/absen_input_binding.dart';
@@ -15,10 +14,15 @@ import 'package:bustan_kopi/app/modules/login/views/login_view.dart';
 import 'package:bustan_kopi/app/modules/penggajian/bindings/penggajian_binding.dart';
 import 'package:bustan_kopi/app/modules/penggajian/views/penggajian_view.dart';
 import 'package:bustan_kopi/app/modules/pin/bindings/pin_binding.dart';
+import 'package:bustan_kopi/app/modules/pin/views/change_pin_view.dart';
 import 'package:bustan_kopi/app/modules/pin/views/pin_view.dart';
 import 'package:bustan_kopi/app/modules/presensi/bindings/presensi_binding.dart';
 import 'package:bustan_kopi/app/modules/presensi/views/add_presensi_view.dart';
 import 'package:bustan_kopi/app/modules/presensi/views/presensi_view.dart';
+import 'package:bustan_kopi/app/modules/setting/bindings/setting_binding.dart';
+import 'package:bustan_kopi/app/modules/setting/views/setting_view.dart';
+import 'package:bustan_kopi/app/modules/shift_edit/bindings/shift_edit_binding.dart';
+import 'package:bustan_kopi/app/modules/shift_edit/views/shift_edit_view.dart';
 
 part 'app_routes.dart';
 
@@ -82,6 +86,16 @@ class AppPages {
       name: _Paths.PIN_CHANGE,
       page: () => ChangePinView(),
       binding: PinBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTING,
+      page: () => SettingView(),
+      binding: SettingBinding(),
+    ),
+    GetPage(
+      name: _Paths.SHIFT_EDIT,
+      page: () => ShiftEditView(),
+      binding: ShiftEditBinding(),
     ),
   ];
 }

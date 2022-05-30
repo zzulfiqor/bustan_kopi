@@ -1,3 +1,4 @@
+import 'package:bustan_kopi/app/data/models/kehadiran_model.dart';
 import 'package:bustan_kopi/app/data/models/user_model.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -18,11 +19,9 @@ class PresensiController extends GetxController {
     }
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  // delete All Presensi
+  void deleteAllPresensi() {
+    var box = Hive.box<Kehadiran>('kehadiran');
+    box.clear();
   }
-
-  @override
-  void onClose() {}
 }

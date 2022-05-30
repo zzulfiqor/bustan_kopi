@@ -40,6 +40,7 @@ class PinView extends GetView<PinController> {
               padding: const EdgeInsets.all(8.0),
               child: Pinput(
                 length: 6,
+                autofocus: true,
                 obscureText: true,
                 onCompleted: (pin) {
                   controller.submitPin(pin);

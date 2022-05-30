@@ -1,4 +1,5 @@
 import 'package:bustan_kopi/app/data/models/kehadiran_model.dart';
+import 'package:bustan_kopi/app/data/models/shift_model.dart';
 import 'package:bustan_kopi/app/data/models/status_kehadiran_enum.dart';
 import 'package:bustan_kopi/app/data/models/user_model.dart';
 import 'package:bustan_kopi/app/utils/global_function.dart';
@@ -12,10 +13,10 @@ class AddPresensiController extends GetxController {
   set user(UserModel value) => _user.value = value;
 
   // Selected Shift
-  List<int> shifts = [1, 2];
-  final _selectedShift = 0.obs;
-  int get selectedShift => _selectedShift.value;
-  set selectedShift(int value) => _selectedShift.value = value;
+  List<ShiftModel> shifts = <ShiftModel>[].obs;
+  final _selectedShift = ShiftModel().obs;
+  ShiftModel get selectedShift => _selectedShift.value;
+  set selectedShift(ShiftModel value) => _selectedShift.value = value;
 
   // List Karyawan
   final _listKaryawan = <UserModel>[UserModel(name: '')].obs;
@@ -30,6 +31,7 @@ class AddPresensiController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getShifts();
     getKaryawan();
 
     var box = Hive.box<UserModel>('activeUser');
@@ -54,21 +56,51 @@ class AddPresensiController extends GetxController {
         .toList();
   }
 
+  void getShifts() async {
+    Box<ShiftModel> box = Hive.box<ShiftModel>('shift');
+    shifts = await box.values.toList();
+  }
+
   void presensi() {
     Box<Kehadiran> box = Hive.box<Kehadiran>('kehadiran');
     var listPresensiCurrentUser = box.values
         .where((element) =>
             element.userId == selectedKaryawan.id &&
-            element.shift == selectedShift.toString() &&
+            element.shift?.id == selectedShift.id.toString() &&
             isToday(DateTime.parse(element.waktuKehadiran!)))
         .toList();
+
+    // convers selected shift time to splitted date
+    var selectedShiftStartTime = selectedShift.timeStart?.split(':');
+    var selectedShiftEndTime = selectedShift.timeEnd?.split(':');
+
+    // convers selected shift time to date time
+    var shiftStart = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+        int.parse(selectedShiftStartTime![0]),
+        int.parse(selectedShiftStartTime[1]));
+
+    var shiftEnd =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
+            .add(Duration(
+      hours: int.parse(selectedShiftEndTime![0]),
+      minutes: int.parse(selectedShiftEndTime[1]),
+    ));
 
     if (listPresensiCurrentUser.length == 0) {
       Kehadiran data = Kehadiran(
         userId: selectedKaryawan.id,
         waktuKehadiran: DateTime.now().toString(),
-        statusKehadiran: StatusKehadiran.Hadir,
-        shift: selectedShift.toString(),
+        statusKehadiran: DateTime.now().isBefore(shiftStart)
+            ? StatusKehadiran.TerlaluPagi
+            : DateTime.now().isAfter(shiftEnd)
+                ? StatusKehadiran.Terlambat
+                : StatusKehadiran.Hadir,
+        shift: ShiftModel(
+            id: selectedShift.id.toString(),
+            name: selectedShift.name.toString()),
       );
 
       box.add(data).then((value) {
